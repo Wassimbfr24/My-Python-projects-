@@ -1,0 +1,23 @@
+import os
+import shutil
+folder_path = "test_folder"
+categories = {
+    ".jpg": "Images",
+    ".png": "Images",
+    ".pdf": "PDFs",
+    ".txt": "Text",
+    ".mp4": "Videos"
+}
+files = os.listdir(folder_path)
+for file in files:
+    full_path = os.path.join(folder_path, file)
+    if os.path.isfile(full_path):
+        name, extension = os.path.splitext(file)
+        category = categories[extension]
+        category_path = os.path.join(folder_path, category)
+        if not os.path.exists(category_path):
+            os.makedirs(category_path)
+        old_path = os.path.join(folder_path, file)
+        new_path = os.path.join(category_path, file)
+        shutil.move(old_path, new_path)
+        print(f"Moved: {file} -> {category}")
